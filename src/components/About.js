@@ -36,7 +36,7 @@ export default function (props) {
 
   return (
     <div className="container my-3" style={props.myStyle}>
-      <h1>About Us</h1>
+      <h1>About </h1>
       <div className="accordion" id="accordionExample" style={props.myStyle}>
         <div className="accordion-item">
           <h2 className="accordion-header">

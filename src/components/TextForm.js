@@ -5,13 +5,16 @@ export default function TextForm(props) {
     // console.log("Uppercase was clicked " + text);
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("Converted to Uppercase!", "success");
   };
   const handleDownClick = () => {
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("Converted to Lowercase!", "success");
   };
   const handleClear = () => {
     setText("");
+    props.showAlert("Text area cleared!", "success");
   };
   const handleOnChange = (event) => {
     // console.log("On Click");
@@ -21,6 +24,7 @@ export default function TextForm(props) {
     var text = document.getElementById("myBox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    props.showAlert("Copied to clipboard!", "success");
   };
   const capitaliseText = () => {
     let newText = text
@@ -28,10 +32,12 @@ export default function TextForm(props) {
       .map((el) => el.charAt(0).toUpperCase() + el.slice(1))
       .join(" ");
     setText(newText);
+    props.showAlert("First letter has been capitalized!", "success");
   };
   const removeSpaces = () => {
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
+    props.showAlert("Extra spaces removed successfully!", "success");
   };
   const handleFindChange = (event) => {
     findWord(event.target.value);
@@ -42,6 +48,7 @@ export default function TextForm(props) {
   const handleReplaceClick = () => {
     let newText = text.replaceAll(fWord, rWord);
     setText(newText);
+    props.showAlert("Word replaced successfully!", "success");
   };
   //   const  extractEmail = () =>{
   //     let newText = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
@@ -70,7 +77,20 @@ export default function TextForm(props) {
       });
     }
   };
-
+  function wordCount(text) {
+    if(text==""){
+      return 0;
+    }
+    let arr=text.split(" ");
+    let len =arr.length;
+    let count=0;
+    for(let i=0;i<len;i++) {
+      if(arr[i]=='' || arr[i]==' '){
+        count++;
+      }
+    }
+    return len-count;
+  }
   return (
     <>
       <div className="cont" style={props.myStyle}>
@@ -116,10 +136,10 @@ export default function TextForm(props) {
           Extract Email
         </button> */}
         </div>
-        <div className="conatiner my-3 mx-2" style={props.myStyle}>
+        <div className="container my-3 " style={props.myStyle}>
           <h2>Your text summary</h2>
           <p className="fw-bold">
-            {text.split(" ").length} words and {text.length} characters
+            {wordCount(text)} words and {text.length} characters
           </p>
 
           <p className="fw-bold">{0.008 * text.length} minutes</p>
@@ -151,7 +171,6 @@ export default function TextForm(props) {
           <button className="btn btn-info mx-2" onClick={handleReplaceClick}>
             Replace
           </button>
-          
         </div>
       </div>
     </>
