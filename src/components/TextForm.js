@@ -21,9 +21,7 @@ export default function TextForm(props) {
     setText(event.target.value);
   };
   const handleCopy = () => {
-    var text = document.getElementById("myBox");
-    text.select();
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(text);
     props.showAlert("Copied to clipboard!", "success");
   };
   const capitaliseText = () => {
@@ -81,7 +79,7 @@ export default function TextForm(props) {
     if(text==""){
       return 0;
     }
-    let arr=text.split(" ");
+    let arr=text.split(/\s+/);
     let len =arr.length;
     let count=0;
     for(let i=0;i<len;i++) {
@@ -95,7 +93,7 @@ export default function TextForm(props) {
     <>
       <div className="cont" style={props.myStyle}>
         <div className="container" style={props.myStyle}>
-          <h1>{props.heading}</h1>
+          <h1 classNmae="mb-4">{props.heading}</h1>
           <div className="mb-3">
             {/* <label for="myBox" className="form-label">Example textarea</label> */}
             <textarea
@@ -110,27 +108,27 @@ export default function TextForm(props) {
               }}
             ></textarea>
           </div>
-          <button className="btn btn-primary mx-2" onClick={handleUpClick}>
+          <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>
             Convert to uppercase
           </button>
-          <button className="btn btn-success mx-2" onClick={handleDownClick}>
+          <button disabled={text.length===0} className="btn btn-success mx-2 my-2" onClick={handleDownClick}>
             Convert to lowercase
           </button>
-          <button className="btn btn-danger mx-2" onClick={handleClear}>
+          <button disabled={text.length===0} className="btn btn-danger mx-2 my-2" onClick={handleClear}>
             Clear Text
           </button>
-          <button className="btn btn-info mx-2" onClick={capitaliseText}>
+          <button disabled={text.length===0} className="btn btn-info mx-2 my-2" onClick={capitaliseText}>
             Capitalise first letter
           </button>
-          <button className="btn btn-warning mx-2" onClick={handleCopy}>
+          <button disabled={text.length===0} className="btn btn-warning mx-2 my-2" onClick={handleCopy}>
             Copy Text
           </button>
-          <button className="btn btn-dark mx-2" onClick={removeSpaces}>
+          <button disabled={text.length===0} className="btn btn-dark mx-2 my-2" onClick={removeSpaces}>
             Remove Extra Spaces
           </button>
           {/* <button className="btn btn-dark mx-2" onClick={toggleMode}>
                     Toggle Mode
-                </button> */}
+                </button> */} 
 
           {/* <button className="btn btn-primary mx-2" onClick={extractEmail}>
           Extract Email
@@ -144,7 +142,7 @@ export default function TextForm(props) {
 
           <p className="fw-bold">{0.008 * text.length} minutes</p>
           <h2 className="my-3">Preview</h2>
-          <p>{text.length > 0 ? text : "Enter something to preview it here"}</p>
+          <p>{text.length > 0 ? text : "Nothing to preview"}</p>
           <h2>Find and Replace</h2>
           <textarea
             className="form-control my-3"

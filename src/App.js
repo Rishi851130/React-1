@@ -13,6 +13,10 @@ function App() {
     color: "black",
     backgroundColor: "white",
   });
+  const [modeAbout, setModeAbout] = useState({
+    color: "black",
+    backgroundColor: "white"
+  });
   const [mode1, setMode1] = useState("dark");
   const [mode, setMode] = useState("light"); //  Whether dark mode is enabled or not
   const [modeText, setModeText] = useState("Enable Dark Mode");
@@ -33,7 +37,7 @@ function App() {
   };
 
   const toggleMode = () => {
-    if (mode == "light") {
+    if (mode === "light") {
       setMode("dark");
       setModeText("Enable Light Mode");
       setMode1("light");
@@ -41,6 +45,11 @@ function App() {
         color: "white",
         backgroundColor: "black",
       });
+      setModeAbout({
+        color: "white",
+        backgroundColor: "#212529"
+      });
+      document.body.style.backgroundColor= "black";
       showAlert("Dark mode has been enabled", "success");
       document.title = "TextUtils-Dark Mode";
       // setInterval(() => {
@@ -57,16 +66,41 @@ function App() {
         color: "black",
         backgroundColor: "white",
       });
+      setModeAbout({
+        color: "black",
+        backgroundColor: "white"
+      });
+      document.body.style.backgroundColor= "white";
       showAlert("Light mode has been enabled", "success");
       document.title = "TextUtils-Light Mode";
     }
   };
+  // const removeBodyClasses = () =>{
+  //   document.body.classList.remove('bg-light');
+  //   document.body.classList.remove('bg-warning');
+  //   document.body.classList.remove('bg-danger');
+  //   document.body.classList.remove('bg-success');
+  //   document.body.classList.remove('bg-primary');
+  //   document.body.classList.remove('bg-dark');
+  // } 
+  // const toggleMode = (cls) => {
+  //   removeBodyClasses();
+  //   document.body.classList.add('bg-'+ cls);
+  //   if (mode === "light") {
+  //     // setMode("dark");
+  //     document.body.style.backgroundColor= "black";
+      
+  //   } else {
+  //     // setMode("light"); 
+  //     document.body.style.backgroundColor= "white";
+  //   }
+  // };
 
   return (
     <>
       <div className="cont" style={modeBody}>
         <BrowserRouter>
-          <div className="cont" style={modeBody}>
+          <div className="cont" >
             <Navbar
               title="TextUtils"
               aboutText="About TextUtils"
@@ -75,16 +109,17 @@ function App() {
               toggleMode={toggleMode}
               modeText={modeText}
             />
+            <Alert alert={alert} />
           </div>
           <Routes>
             <Route
               exact
               path="/TextForm"
               element={
-                <div className="container" myStyle={modeBody}>
+                <div className="container" >
                   <TextForm
                     showAlert={showAlert}
-                    heading="Enter the text below to analyse "
+                    heading="Try TextUtils - Word Counter, Character Counter, Remove Extra Spaces "
                     myStyle={modeBody}
                     mode={mode}
                   />
@@ -95,8 +130,8 @@ function App() {
               exact
               path="/About"
               element={
-                <div className="container" myStyle={modeBody}>
-                  <About myStyle={modeBody} />
+                <div className="container" >
+                  <About myStyle={modeBody} myStyle1={modeAbout}/>
                 </div>
               }
             />
